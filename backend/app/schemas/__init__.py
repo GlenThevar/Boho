@@ -17,6 +17,19 @@ from .firewall import (
     RuleMatchStat,
     DashboardStatsResponse,
 )
+from .analysis import (
+    SecurityFindingResponse,
+    DismissFindingRequest,
+    PolicyAnalysisSummaryResponse,
+    PolicyAnalysisRuleSnapshotResponse,
+    PolicyAnalysisDetailResponse,
+    PolicyComparisonCreateRequest,
+    PolicyComparisonSummaryResponse,
+    PolicyComparisonRecordResponse,
+    PaginatedComparisonRecords,
+    ComparisonRuleSnapshotItem,
+    PolicyComparisonDetailResponse,
+)
 
 __all__ = [
     "FirewallRuleBase",
@@ -36,4 +49,16 @@ __all__ = [
     "PaginatedRecordResults",
     "RuleMatchStat",
     "DashboardStatsResponse",
+    "SecurityFindingResponse",
+    "DismissFindingRequest",
+    "PolicyAnalysisSummaryResponse",
+    "PolicyAnalysisRuleSnapshotResponse",
+    "PolicyAnalysisDetailResponse",
+    "PolicyComparisonCreateRequest",
+    "PolicyComparisonSummaryResponse",
+    "PolicyComparisonRecordResponse",
+    "PaginatedComparisonRecords",
+    "ComparisonRuleSnapshotItem",
+    "PolicyComparisonDetailResponse",
 ]
+

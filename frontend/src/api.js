@@ -69,3 +69,36 @@ export const deleteSimulation = (id) => fetchApi(`/simulations/${id}`, { method:
 
 // Dashboard API
 export const getDashboardStats = () => fetchApi("/dashboard/stats");
+
+// Policy Analysis API (Stage 2)
+export const runPolicyAnalysis = () => fetchApi("/analysis/run", { method: "POST" });
+export const getLatestPolicyAnalysis = () => fetchApi("/analysis/latest");
+export const getPolicyAnalyses = () => fetchApi("/analysis");
+export const getPolicyAnalysisDetail = (id) => fetchApi(`/analysis/${id}`);
+export const dismissFinding = (id, reason) => fetchApi(`/analysis/findings/${id}/dismiss`, {
+  method: "PATCH",
+  body: JSON.stringify({ reason }),
+});
+export const restoreFinding = (id) => fetchApi(`/analysis/findings/${id}/restore`, {
+  method: "PATCH",
+});
+
+// Policy Comparisons API (Stage 2)
+export const createPolicyComparison = (data) => fetchApi("/comparisons", {
+  method: "POST",
+  body: JSON.stringify(data),
+});
+export const getPolicyComparisons = () => fetchApi("/comparisons");
+export const getPolicyComparisonDetail = (id, params = {}) => {
+  const query = new URLSearchParams();
+  Object.entries(params).forEach(([k, v]) => {
+    if (v !== undefined && v !== null && v !== "") {
+      query.append(k, v);
+    }
+  });
+  const qs = query.toString() ? `?${query.toString()}` : "";
+  return fetchApi(`/comparisons/${id}${qs}`);
+};
+export const getExportComparisonCsvUrl = (id) => `${API_BASE}/comparisons/${id}/export`;
+export const deleteComparison = (id) => fetchApi(`/comparisons/${id}`, { method: "DELETE" });
+

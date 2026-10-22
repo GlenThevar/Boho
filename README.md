@@ -1,9 +1,14 @@
 # Boho | Firewall Policy Simulation and Testing Platform
 
-Boho is a cybersecurity web application for designing, simulating, and auditing firewall rule policies against offline network traffic datasets.
+Boho is a cybersecurity web application for designing, simulating, auditing, and analyzing firewall rule policies against offline network traffic datasets.
 
-> **Stage 1 Implementation Notice:**
-> Boho is an offline, deterministic simulation and educational testing platform. It simulates packet routing decisions and **does not** modify the host operating system's firewall (iptables/nftables/pf), bind live network capture interfaces, or interfere with real traffic.
+> **Stage 2 Implementation Update:**
+> Boho now includes **Firewall Policy Analysis and Security Auditing (Stage 2)**:
+> - **Rule Shadowing Detection**: Formally proves when an earlier rule prevents a later rule from ever being evaluated.
+> - **Rule Redundancy Detection**: Confirms rules whose removal produces zero decision changes.
+> - **Overly Permissive Security Audit**: Deterministic rule-based checks for exposed administration interfaces, sensitive databases, and broad wildcards.
+> - **Before-and-After Policy Impact Comparison**: Re-evaluates historical traffic datasets against proposed policy revisions with diff telemetry and CSV exports.
+> - **Offline Safety**: Simulates routing decisions without modifying host OS packet filters (iptables/nftables/pf) or binding live interfaces.
 
 ---
 
@@ -19,12 +24,15 @@ Boho is engineered with a decoupled client-server architecture:
                             │
           ┌─────────────────┴─────────────────┐
           ▼                                   ▼
- [ Evaluation Engine ]              [ SQLAlchemy ORM ]
-   (ipaddress, first-match-wins)        (SQLite: boho.db)
+ [ Evaluation & Analysis Engines ]    [ SQLAlchemy ORM ]
+   ├── Firewall Evaluator (ipaddress)    ├── Rules & Simulations
+   ├── Shadowing & Redundancy Detector   ├── Policy Analyses & Findings
+   └── Policy Comparison Engine          └── Policy Comparison Snapshots
 ```
 
-- **Evaluation Engine (`backend/app/engine/firewall_engine.py`)**: A standalone, zero-dependency Python module implementing deterministic first-match-wins rule evaluation using Python's standard `ipaddress` library.
-- **Rule Snapshots (`SimulationRuleSnapshot`)**: When running a simulation, active firewall rules are snapshotted into the database. Editing or deleting active rules later preserves historical simulation results.
+- **Evaluation Engine (`backend/app/engine/firewall_engine.py`)**: Standalone Python module implementing deterministic first-match-wins rule evaluation using Python's standard `ipaddress` library.
+- **Analysis Engine (`backend/app/engine/policy_analyzer.py`)**: Mathematical traffic-space analyzer detecting full shadowing, behavioral redundancy, and security risks with transparent severity and remediations.
+- **Comparison Engine (`backend/app/api/comparisons.py`)**: Re-evaluates identical recorded traffic packets against proposed policy modifications without mutating historical simulation sessions.
 - **Frontend (`frontend/src/`)**: Pure React (JSX, JavaScript) with a dark cybersecurity-themed dashboard styled with Tailwind CSS, Lucide icons, and Recharts.
 
 ---
@@ -40,39 +48,51 @@ Boho/
 │   │   │   ├── rules.py          # Rule management REST endpoints
 │   │   │   ├── datasets.py       # CSV dataset upload & validation
 │   │   │   ├── simulations.py    # Simulation runner, detail & export
-│   │   │   └── dashboard.py      # Aggregated metrics & stats
+│   │   │   ├── dashboard.py      # Aggregated metrics & stats
+│   │   │   ├── analysis.py       # Policy analysis, findings & dismissals (Stage 2)
+│   │   │   └── comparisons.py    # Before-and-after policy comparison (Stage 2)
 │   │   ├── engine/
 │   │   │   ├── __init__.py
-│   │   │   └── firewall_engine.py# Deterministic offline evaluation engine
+│   │   │   ├── firewall_engine.py# Deterministic offline evaluation engine
+│   │   │   └── policy_analyzer.py# Mathematical shadowing, redundancy & audit engine (Stage 2)
 │   │   ├── models/
 │   │   │   ├── __init__.py
-│   │   │   └── firewall.py       # SQLAlchemy ORM database models
+│   │   │   ├── firewall.py       # Rules, simulations, and snapshots models
+│   │   │   └── analysis.py       # Analysis findings, comparisons & diff models (Stage 2)
 │   │   ├── schemas/
 │   │   │   ├── __init__.py
-│   │   │   └── firewall.py       # Pydantic v2 request & response schemas
+│   │   │   ├── firewall.py       # Pydantic models for Stage 1
+│   │   │   └── analysis.py       # Pydantic models for Stage 2
 │   │   ├── database.py           # SQLite connection & session maker
 │   │   ├── main.py               # FastAPI entrypoint & CORS setup
 │   │   └── seed.py               # Default rule seeder script
 │   ├── tests/
-│   │   ├── test_engine.py        # 13 unit tests for evaluation engine
+│   │   ├── test_engine.py        # Evaluation engine unit tests
 │   │   ├── test_api.py           # REST API & historical snapshot tests
-│   │   └── test_dataset.py       # CSV validation & parsing tests
+│   │   ├── test_dataset.py       # CSV validation & parsing tests
+│   │   ├── test_shadowing.py     # Rule shadowing detection tests (Stage 2)
+│   │   ├── test_redundancy.py    # Rule redundancy detection tests (Stage 2)
+│   │   ├── test_security_audit.py# Security risk detection tests (Stage 2)
+│   │   └── test_comparison.py    # Policy comparison workflow tests (Stage 2)
 │   └── requirements.txt
 ├── frontend/
 │   ├── src/
 │   │   ├── components/
 │   │   │   ├── Navbar.jsx        # Top banner with offline safety badge
-│   │   │   ├── Sidebar.jsx       # Tabbed navigation
+│   │   │   ├── Sidebar.jsx       # Tabbed navigation (including Stage 2 views)
 │   │   │   ├── RuleModal.jsx     # Rule create/edit modal with validation
 │   │   │   ├── RecordDetailModal.jsx # Per-packet diagnostics modal
 │   │   │   ├── SnapshotModal.jsx # Historical rule snapshot inspector
+│   │   │   ├── FindingDetailModal.jsx# Policy finding inspection & dismissal (Stage 2)
 │   │   │   └── DeleteConfirmModal.jsx# Safe confirmation dialog
 │   │   ├── pages/
 │   │   │   ├── Dashboard.jsx     # Recharts KPIs, charts, and activity
 │   │   │   ├── FirewallRules.jsx # Rule list, toggles, priority reordering
 │   │   │   ├── DatasetTesting.jsx# CSV upload, preview & simulation launch
 │   │   │   ├── SimulationResults.jsx# Paginated traffic log, search & filter
-│   │   │   └── SimulationHistory.jsx# Historical sessions list
+│   │   │   ├── SimulationHistory.jsx# Historical sessions list
+│   │   │   ├── PolicyAnalysis.jsx# Rule shadowing, redundancy & audit findings (Stage 2)
+│   │   │   └── PolicyComparison.jsx# Before-and-after policy comparison (Stage 2)
 │   │   ├── api.js                # Frontend REST API client
 │   │   ├── App.jsx               # Root application view
 │   │   ├── main.jsx              # React DOM entrypoint
@@ -180,6 +200,18 @@ All 24 test cases will execute:
 | `GET` | `/api/simulations/{id}/export` | Export simulation records as downloadable CSV |
 | `DELETE` | `/api/simulations/{id}` | Delete a simulation run |
 | `GET` | `/api/dashboard/stats` | Aggregated dashboard metrics & distribution |
+| `POST` | `/api/analysis/run` | Execute formal rule shadowing, redundancy & security audit |
+| `GET` | `/api/analysis/latest` | Retrieve most recent policy analysis report |
+| `GET` | `/api/analysis` | List historical policy analyses |
+| `GET` | `/api/analysis/{id}` | Get policy analysis detail, rule snapshot & findings |
+| `PATCH` | `/api/analysis/findings/{id}/dismiss` | Dismiss a security finding with justification reason |
+| `PATCH` | `/api/analysis/findings/{id}/restore` | Restore a dismissed security finding |
+| `POST` | `/api/comparisons` | Create a Before-and-After policy comparison against a simulation |
+| `GET` | `/api/comparisons` | List historical policy comparisons |
+| `GET` | `/api/comparisons/{id}` | Get comparison metrics, diff breakdown & paginated records |
+| `GET` | `/api/comparisons/{id}/export` | Export comparison results to CSV |
+| `DELETE` | `/api/comparisons/{id}` | Delete a comparison record |
+
 
 ---
 

@@ -10,6 +10,16 @@ from .firewall_engine import (
     evaluate_record,
     evaluate_dataset,
 )
+from .policy_analyzer import (
+    ShadowingFinding,
+    RedundancyFinding,
+    SecurityFindingData,
+    PolicyAnalysisReport,
+    detect_shadowing,
+    detect_redundancy,
+    audit_security_policies,
+    analyze_firewall_policy,
+)
 
 __all__ = [
     "FirewallRuleData",
@@ -22,4 +32,13 @@ __all__ = [
     "validate_protocol_spec",
     "evaluate_record",
     "evaluate_dataset",
+    "ShadowingFinding",
+    "RedundancyFinding",
+    "SecurityFindingData",
+    "PolicyAnalysisReport",
+    "detect_shadowing",
+    "detect_redundancy",
+    "audit_security_policies",
+    "analyze_firewall_policy",
 ]
+

@@ -6,6 +6,8 @@ import FirewallRules from './pages/FirewallRules';
 import DatasetTesting from './pages/DatasetTesting';
 import SimulationResults from './pages/SimulationResults';
 import SimulationHistory from './pages/SimulationHistory';
+import PolicyAnalysis from './pages/PolicyAnalysis';
+import PolicyComparison from './pages/PolicyComparison';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -57,8 +59,19 @@ export default function App() {
               onOpenSimulation={(id) => handleOpenResults(id)}
             />
           )}
+
+          {activeTab === 'analysis' && (
+            <PolicyAnalysis
+              onNavigateToRules={() => setActiveTab('rules')}
+            />
+          )}
+
+          {activeTab === 'comparison' && (
+            <PolicyComparison />
+          )}
         </main>
       </div>
     </div>
   );
 }
+

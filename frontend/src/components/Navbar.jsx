@@ -11,11 +11,11 @@ export default function Navbar() {
         <div>
           <div className="flex items-center space-x-2">
             <span className="font-bold text-lg tracking-wider text-slate-100 font-mono">BOHO</span>
-            <span className="text-[10px] uppercase font-semibold tracking-wider px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800/60">
-              Stage 1
+            <span className="text-[10px] uppercase font-semibold tracking-wider px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800/60 font-mono">
+              Stage 2: Policy Analysis
             </span>
           </div>
-          <p className="text-xs text-slate-400">Firewall Policy Simulation & Testing Platform</p>
+          <p className="text-xs text-slate-400">Firewall Policy Simulation, Security Audit & Testing Platform</p>
         </div>
       </div>
 
