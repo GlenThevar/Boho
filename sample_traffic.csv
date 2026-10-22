@@ -1,0 +1,11 @@
+record_id,source_ip,destination_ip,destination_port,protocol
+traffic-001,192.168.1.45,10.0.0.10,443,TCP
+traffic-002,192.168.1.50,1.1.1.1,53,UDP
+traffic-003,192.168.1.102,8.8.8.8,,ICMP
+traffic-004,10.0.0.25,10.0.0.10,23,TCP
+traffic-005,203.0.113.88,10.0.0.10,80,TCP
+traffic-006,172.16.5.20,10.0.0.10,8080,TCP
+traffic-007,192.168.1.99,10.0.0.10,80,TCP
+traffic-008,192.168.2.10,192.168.1.10,22,TCP
+traffic-009,999.999.1.1,10.0.0.10,80,TCP
+traffic-010,192.168.1.20,10.0.0.10,99999,TCP
