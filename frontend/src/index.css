@@ -2,30 +2,395 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* ==========================================================================
+   PURE MONOCHROME DUAL-THEME SYSTEM
+   Dark Theme: Pure Black (#000000) & ONLY White Text (#ffffff) — No other colours.
+   White Theme: Pure White (#ffffff) & ONLY Black Text (#000000) — No other colours.
+   ========================================================================== */
+
+/* ── CSS CUSTOM PROPERTIES ───────────────────────────────────────────────── */
+:root,
+html.dark {
   color-scheme: dark;
+  --color-page-bg:   #000000;
+  --color-page-text: #ffffff;
+  --color-card-bg:   #000000;
+  --color-card-text: #ffffff;
+  --color-border:    #2e2e2e;
+  --color-muted:     #ffffff;
+  --color-hover:     #141414;
+  --color-input-bg:  #000000;
+}
+
+html.light {
+  color-scheme: light;
+  --color-page-bg:   #ffffff;
+  --color-page-text: #000000;
+  --color-card-bg:   #ffffff;
+  --color-card-text: #000000;
+  --color-border:    #d4d4d4;
+  --color-muted:     #000000;
+  --color-hover:     #f5f5f5;
+  --color-input-bg:  #ffffff;
 }
 
 body {
   margin: 0;
-  background-color: #0b0f19;
-  color: #f1f5f9;
+  padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Custom scrollbars */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+/* ==========================================================================
+   1. PURE DARK THEME (Black Background, ONLY White Text, No Other Colours)
+   ========================================================================== */
+
+html.dark,
+html.dark body {
+  background-color: #000000 !important;
+  color: #ffffff !important;
 }
-::-webkit-scrollbar-track {
-  background: #0f172a;
+
+/* Force ALL text to be strictly pure white */
+html.dark,
+html.dark * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
-::-webkit-scrollbar-thumb {
-  background: #334155;
-  border-radius: 3px;
+
+/* Force ALL SVG icons and shapes to be strictly white */
+html.dark svg,
+html.dark svg path,
+html.dark svg circle,
+html.dark svg rect,
+html.dark svg line,
+html.dark svg polyline,
+html.dark svg polygon {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+
+/* Strip all colored backgrounds; enforce pure black surfaces */
+html.dark body,
+html.dark div,
+html.dark main,
+html.dark aside,
+html.dark header,
+html.dark footer,
+html.dark section,
+html.dark article,
+html.dark nav,
+html.dark ul,
+html.dark ol,
+html.dark li,
+html.dark span,
+html.dark p,
+html.dark pre,
+html.dark code,
+html.dark table,
+html.dark thead,
+html.dark tbody,
+html.dark tr,
+html.dark th,
+html.dark td,
+html.dark form,
+html.dark fieldset {
+  background-color: #000000 !important;
+}
+
+/* Subtle monochrome hover states for interactive rows / lists */
+html.dark tr:hover,
+html.dark tr:hover td {
+  background-color: #0f0f0f !important;
+}
+
+/* Buttons in dark mode: pure black with white border, white text, subtle hover */
+html.dark button,
+html.dark a[role="button"],
+html.dark input[type="button"],
+html.dark input[type="submit"] {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+
+html.dark button:hover,
+html.dark a[role="button"]:hover {
+  background-color: #1a1a1a !important;
+}
+
+/* Form inputs, textareas, selects */
+html.dark input,
+html.dark textarea,
+html.dark select {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-color: #404040 !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #737373 !important;
+  -webkit-text-fill-color: #737373 !important;
+}
+
+/* Enforce crisp monochrome borders (no colored borders) */
+html.dark [class*="border-slate-"],
+html.dark [class*="border-cyan-"],
+html.dark [class*="border-emerald-"],
+html.dark [class*="border-red-"],
+html.dark [class*="border-amber-"],
+html.dark [class*="border-blue-"],
+html.dark [class*="border-purple-"],
+html.dark [class*="border-violet-"],
+html.dark [class*="border-orange-"],
+html.dark .border-border {
+  border-color: #2b2b2b !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+html.dark * {
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+html.dark .border-white {
+  border-color: #ffffff !important;
+}
+
+/* Focus rings */
+html.dark *:focus-visible {
+  outline: 1px solid #ffffff !important;
+  outline-offset: 1px;
+}
+
+/* ai-badge: borderless inline indicator */
+.ai-badge,
+html.dark .ai-badge,
+html.light .ai-badge {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  opacity: 0.65;
+}
+
+/* Clean monochrome action button */
+.btn-monochrome {
+  border: 1px solid #ffffff !important;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+.btn-monochrome:hover {
+  background-color: #1a1a1a !important;
+}
+html.light .btn-monochrome {
+  border: 1px solid #000000 !important;
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+html.light .btn-monochrome:hover {
+  background-color: #f0f0f0 !important;
+}
+
+/* Modals & Dialogs */
+html.dark .fixed.inset-0.bg-black\/80,
+html.dark .fixed.inset-0.bg-black\/40 {
+  background-color: rgba(0, 0, 0, 0.85) !important;
+}
+
+/* Header & Sidebar: completely borderless nav items */
+header,
+header *,
+aside button,
+aside button * {
+  border: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+/* Scrollbars */
+html.dark ::-webkit-scrollbar       { width: 6px; height: 6px; }
+html.dark ::-webkit-scrollbar-track { background: #000000; }
+html.dark ::-webkit-scrollbar-thumb { background: #333333; border-radius: 3px; }
+html.dark ::-webkit-scrollbar-thumb:hover { background: #666666; }
+
+/* Recharts in Dark Mode: pure monochrome */
+html.dark text,
+html.dark .recharts-text {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+}
+html.dark .recharts-cartesian-grid line {
+  stroke: #262626 !important;
+}
+html.dark .recharts-cartesian-axis-line,
+html.dark .recharts-cartesian-axis-tick-line {
+  stroke: #404040 !important;
+}
+html.dark .recharts-default-tooltip {
+  background-color: #000000 !important;
+  border: 1px solid #ffffff !important;
+}
+html.dark .recharts-legend-item-text {
+  color: #ffffff !important;
+}
+
+
+/* ==========================================================================
+   2. PURE WHITE THEME (White Background, ONLY Black Text, No Other Colours)
+   ========================================================================== */
+
+html.light,
+html.light body {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* Force ALL text to be strictly pure black */
+html.light,
+html.light * {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+/* Force ALL SVG icons and shapes to be strictly black */
+html.light svg,
+html.light svg path,
+html.light svg circle,
+html.light svg rect,
+html.light svg line,
+html.light svg polyline,
+html.light svg polygon {
+  color: #000000 !important;
+  stroke: #000000 !important;
+}
+
+/* Strip all colored backgrounds; enforce pure white surfaces */
+html.light body,
+html.light div,
+html.light main,
+html.light aside,
+html.light header,
+html.light footer,
+html.light section,
+html.light article,
+html.light nav,
+html.light ul,
+html.light ol,
+html.light li,
+html.light span,
+html.light p,
+html.light pre,
+html.light code,
+html.light table,
+html.light thead,
+html.light tbody,
+html.light tr,
+html.light th,
+html.light td,
+html.light form,
+html.light fieldset {
+  background-color: #ffffff !important;
+}
+
+/* Subtle monochrome hover states for interactive rows / lists */
+html.light tr:hover,
+html.light tr:hover td {
+  background-color: #f7f7f7 !important;
+}
+
+/* Buttons in light mode: pure white with black border, black text, subtle hover */
+html.light button,
+html.light a[role="button"],
+html.light input[type="button"],
+html.light input[type="submit"] {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border-color: #000000 !important;
+}
+
+html.light button:hover,
+html.light a[role="button"]:hover {
+  background-color: #f0f0f0 !important;
+}
+
+/* Form inputs, textareas, selects */
+html.light input,
+html.light textarea,
+html.light select {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border-color: #d4d4d4 !important;
+}
+
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: #8c8c8c !important;
+  -webkit-text-fill-color: #8c8c8c !important;
+}
+
+/* Enforce crisp monochrome borders (no colored borders) */
+html.light [class*="border-slate-"],
+html.light [class*="border-cyan-"],
+html.light [class*="border-emerald-"],
+html.light [class*="border-red-"],
+html.light [class*="border-amber-"],
+html.light [class*="border-blue-"],
+html.light [class*="border-purple-"],
+html.light [class*="border-violet-"],
+html.light [class*="border-orange-"],
+html.light .border-border {
+  border-color: #e5e5e5 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+html.light * {
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+html.light .border-black {
+  border-color: #000000 !important;
+}
+
+/* Focus rings */
+html.light *:focus-visible {
+  outline: 1px solid #000000 !important;
+  outline-offset: 1px;
+}
+
+/* Modals & Dialogs */
+html.light .fixed.inset-0.bg-black\/80,
+html.light .fixed.inset-0.bg-black\/40 {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* Scrollbars */
+html.light ::-webkit-scrollbar       { width: 6px; height: 6px; }
+html.light ::-webkit-scrollbar-track { background: #ffffff; }
+html.light ::-webkit-scrollbar-thumb { background: #d4d4d4; border-radius: 3px; }
+html.light ::-webkit-scrollbar-thumb:hover { background: #a3a3a3; }
+
+/* Recharts in Light Mode: pure monochrome */
+html.light text,
+html.light .recharts-text {
+  fill: #000000 !important;
+  color: #000000 !important;
+}
+html.light .recharts-cartesian-grid line {
+  stroke: #e5e5e5 !important;
+}
+html.light .recharts-cartesian-axis-line,
+html.light .recharts-cartesian-axis-tick-line {
+  stroke: #cccccc !important;
+}
+html.light .recharts-default-tooltip {
+  background-color: #ffffff !important;
+  border: 1px solid #000000 !important;
+}
+html.light .recharts-legend-item-text {
+  color: #000000 !important;
 }

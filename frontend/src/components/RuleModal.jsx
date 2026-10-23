@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { X, AlertCircle, HelpCircle } from 'lucide-react';
+import {
+  Cancel01Icon as X,
+  AlertCircleIcon as AlertCircle,
+  HelpCircleIcon as HelpCircle,
+} from 'hugeicons-react';
 
 export default function RuleModal({ isOpen, onClose, onSave, ruleToEdit, existingRulesCount = 0 }) {
   const [formData, setFormData] = useState({

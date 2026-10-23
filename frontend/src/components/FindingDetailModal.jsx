@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import {
-  X,
-  AlertTriangle,
-  ShieldAlert,
-  ShieldCheck,
-  CheckCircle,
-  Copy,
-  Info,
-  RotateCcw,
-  EyeOff
-} from 'lucide-react';
+  Cancel01Icon as X,
+  AlertCircleIcon as AlertTriangle,
+  Shield02Icon as ShieldAlert,
+  Shield01Icon as ShieldCheck,
+  CheckmarkCircle01Icon as CheckCircle,
+  Copy01Icon as Copy,
+  InformationCircleIcon as Info,
+  ArrowTurnBackwardIcon as RotateCcw,
+  ViewOffIcon as EyeOff
+} from 'hugeicons-react';
+import AIExplanationPanel from './AIExplanationPanel';
+import { aiExplainFinding } from '../api';
 
 export default function FindingDetailModal({ finding, onClose, onDismiss, onRestore }) {
   const [dismissReason, setDismissReason] = useState('');
@@ -140,6 +142,20 @@ export default function FindingDetailModal({ finding, onClose, onDismiss, onRest
               {finding.remediation}
             </div>
           </div>
+
+          {/* AI Explanation */}
+          <AIExplanationPanel
+            title="Explain with AI"
+            onFetch={() =>
+              aiExplainFinding({
+                finding_type: finding.finding_type || finding.category || 'unknown',
+                finding_summary: finding.explanation || finding.title || '',
+                rule_details: finding.evidence?.rule || null,
+                responsible_rules: finding.evidence?.responsible_rules || null,
+                severity: finding.severity,
+              })
+            }
+          />
 
           {/* Dismiss Form */}
           {!finding.is_dismissed && showDismissInput && (

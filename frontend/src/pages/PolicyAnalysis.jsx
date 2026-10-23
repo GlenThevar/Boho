@@ -7,23 +7,24 @@ import {
   restoreFinding,
 } from '../api';
 import FindingDetailModal from '../components/FindingDetailModal';
+import { useTheme } from '../context/ThemeContext';
 import {
-  ShieldAlert,
-  ShieldCheck,
-  AlertTriangle,
-  Play,
-  RefreshCw,
-  Search,
-  Filter,
-  Eye,
-  CheckCircle2,
-  XCircle,
-  EyeOff,
-  RotateCcw,
-  Layers,
-  Sparkles,
-  Info
-} from 'lucide-react';
+  Shield02Icon as ShieldAlert,
+  Shield01Icon as ShieldCheck,
+  AlertCircleIcon as AlertTriangle,
+  PlayIcon as Play,
+  RefreshIcon as RefreshCw,
+  Search01Icon as Search,
+  FilterIcon as Filter,
+  EyeIcon as Eye,
+  CheckmarkCircle01Icon as CheckCircle2,
+  Cancel01Icon as XCircle,
+  ViewOffIcon as EyeOff,
+  ArrowTurnBackwardIcon as RotateCcw,
+  Layers01Icon as Layers,
+  SparklesIcon as Sparkles,
+  InformationCircleIcon as Info,
+} from 'hugeicons-react';
 import {
   BarChart,
   Bar,
@@ -36,6 +37,8 @@ import {
 } from 'recharts';
 
 export default function PolicyAnalysis({ onNavigateToRules }) {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -126,10 +129,10 @@ export default function PolicyAnalysis({ onNavigateToRules }) {
 
   // Chart data
   const severityChartData = [
-    { name: 'Critical', count: analysis?.severity_distribution?.Critical || 0, color: '#ef4444' },
-    { name: 'High', count: analysis?.severity_distribution?.High || 0, color: '#f97316' },
-    { name: 'Medium', count: analysis?.severity_distribution?.Medium || 0, color: '#f59e0b' },
-    { name: 'Low', count: analysis?.severity_distribution?.Low || 0, color: '#06b6d4' },
+    { name: 'Critical', count: analysis?.severity_distribution?.Critical || 0, color: isDark ? '#ffffff' : '#000000' },
+    { name: 'High', count: analysis?.severity_distribution?.High || 0, color: isDark ? '#d4d4d4' : '#404040' },
+    { name: 'Medium', count: analysis?.severity_distribution?.Medium || 0, color: isDark ? '#a3a3a3' : '#737373' },
+    { name: 'Low', count: analysis?.severity_distribution?.Low || 0, color: isDark ? '#737373' : '#a3a3a3' },
   ];
 
   const getSeverityBadge = (sev) => {
@@ -163,11 +166,8 @@ export default function PolicyAnalysis({ onNavigateToRules }) {
         <div>
           <div className="flex items-center space-x-3">
             <h2 className="text-xl font-bold text-slate-100 flex items-center space-x-2">
-              <span>Firewall Policy Analysis & Security Audit</span>
+              <span>Firewall Policy Analysis &amp; Security Audit</span>
             </h2>
-            <span className="text-xs px-2.5 py-0.5 rounded-full bg-cyan-950 text-cyan-400 border border-cyan-800 font-mono">
-              Stage 2
-            </span>
           </div>
           <p className="text-xs text-slate-400 mt-1">
             Detects fully shadowed rules, redundant policies, and overly permissive security risks using deterministic formal checks.

@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { getDashboardStats } from '../api';
+import { useTheme } from '../context/ThemeContext';
 import {
-  ShieldCheck,
-  ShieldAlert,
-  Activity,
-  Layers,
-  AlertTriangle,
-  ArrowUpRight,
-  RefreshCw,
-  Info
-} from 'lucide-react';
+  Shield01Icon as ShieldCheck,
+  Shield02Icon as ShieldAlert,
+  Activity01Icon as Activity,
+  Layers01Icon as Layers,
+  AlertCircleIcon as AlertTriangle,
+  ArrowUpRight01Icon as ArrowUpRight,
+  RefreshIcon as RefreshCw,
+  InformationCircleIcon as Info,
+} from 'hugeicons-react';
 import {
   PieChart,
   Pie,
@@ -25,6 +26,8 @@ import {
 } from 'recharts';
 
 export default function Dashboard({ onNavigateToResults, onNavigateToRules, onNavigateToTesting }) {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -78,8 +81,8 @@ export default function Dashboard({ onNavigateToResults, onNavigateToRules, onNa
 
   const pieData = stats && stats.total_records > 0
     ? [
-        { name: 'Allowed', value: stats.allowed_records, color: '#10b981' },
-        { name: 'Denied', value: stats.denied_records, color: '#ef4444' },
+        { name: 'Allowed', value: stats.allowed_records, color: isDark ? '#ffffff' : '#000000' },
+        { name: 'Denied', value: stats.denied_records, color: isDark ? '#404040' : '#a3a3a3' },
       ]
     : [];
 
@@ -89,7 +92,9 @@ export default function Dashboard({ onNavigateToResults, onNavigateToRules, onNa
         fullName: r.rule_name,
         matches: r.match_count,
         action: r.action,
-        color: r.action === 'ALLOW' ? '#10b981' : '#ef4444',
+        color: isDark
+          ? (r.action === 'ALLOW' ? '#ffffff' : '#525252')
+          : (r.action === 'ALLOW' ? '#000000' : '#a3a3a3'),
       }))
     : [];
 

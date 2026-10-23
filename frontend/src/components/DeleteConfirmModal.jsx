@@ -1,5 +1,5 @@
 import React from 'react';
-import { AlertTriangle, X } from 'lucide-react';
+import { AlertCircleIcon as AlertTriangle, Cancel01Icon as X } from 'hugeicons-react';
 
 export default function DeleteConfirmModal({ isOpen, onClose, onConfirm, title, message, itemName }) {
   if (!isOpen) return null;

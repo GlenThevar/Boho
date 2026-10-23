@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ThemeProvider } from './context/ThemeContext';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
@@ -8,10 +9,12 @@ import SimulationResults from './pages/SimulationResults';
 import SimulationHistory from './pages/SimulationHistory';
 import PolicyAnalysis from './pages/PolicyAnalysis';
 import PolicyComparison from './pages/PolicyComparison';
+import AIAssistantDrawer from './components/AIAssistantDrawer';
 
-export default function App() {
+function AppInner() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [selectedSimulationId, setSelectedSimulationId] = useState(null);
+  const [assistantOpen, setAssistantOpen] = useState(false);
 
   const handleOpenResults = (simId) => {
     setSelectedSimulationId(simId);
@@ -19,18 +22,16 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0b0f19] text-slate-100 flex flex-col font-sans">
-      <Navbar />
+    <div className="min-h-screen flex flex-col font-sans bg-page text-page">
+      <Navbar onOpenAssistant={() => setAssistantOpen(true)} />
 
       <div className="flex-1 flex overflow-hidden">
         <Sidebar
           activeTab={activeTab}
-          onSelectTab={(tab) => {
-            setActiveTab(tab);
-          }}
+          onSelectTab={(tab) => { setActiveTab(tab); }}
         />
 
-        <main className="flex-1 overflow-y-auto bg-[#0b0f19]">
+        <main className="flex-1 overflow-y-auto bg-page">
           {activeTab === 'dashboard' && (
             <Dashboard
               onNavigateToResults={(id) => handleOpenResults(id)}
@@ -71,7 +72,19 @@ export default function App() {
           )}
         </main>
       </div>
+
+      <AIAssistantDrawer
+        open={assistantOpen}
+        onClose={() => setAssistantOpen(false)}
+      />
     </div>
   );
 }
 
+export default function App() {
+  return (
+    <ThemeProvider>
+      <AppInner />
+    </ThemeProvider>
+  );
+}

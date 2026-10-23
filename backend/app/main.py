@@ -1,3 +1,9 @@
+import os
+from dotenv import load_dotenv
+
+# Load .env before anything else so AI config is available at import time
+load_dotenv(override=False)
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.database import engine, Base
@@ -8,8 +14,8 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="Boho - Firewall Policy Simulation Platform",
-    description="Deterministic offline firewall policy simulator and testing platform (Stage 1).",
-    version="1.0.0",
+    description="Deterministic offline firewall policy simulator, auditing, and AI assistant (Stage 3).",
+    version="3.0.0",
 )
 
 # CORS configuration restricted to local frontend development origins

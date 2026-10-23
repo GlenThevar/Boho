@@ -2,13 +2,14 @@
 
 Boho is a cybersecurity web application for designing, simulating, auditing, and analyzing firewall rule policies against offline network traffic datasets.
 
-> **Stage 2 Implementation Update:**
-> Boho now includes **Firewall Policy Analysis and Security Auditing (Stage 2)**:
-> - **Rule Shadowing Detection**: Formally proves when an earlier rule prevents a later rule from ever being evaluated.
-> - **Rule Redundancy Detection**: Confirms rules whose removal produces zero decision changes.
-> - **Overly Permissive Security Audit**: Deterministic rule-based checks for exposed administration interfaces, sensitive databases, and broad wildcards.
-> - **Before-and-After Policy Impact Comparison**: Re-evaluates historical traffic datasets against proposed policy revisions with diff telemetry and CSV exports.
-> - **Offline Safety**: Simulates routing decisions without modifying host OS packet filters (iptables/nftables/pf) or binding live interfaces.
+> **Stage 3 Implementation Update:**
+> Boho now includes **Stage 3: AI-Powered Security Assistant** powered by Amazon Bedrock (`amazon.nova-pro-v1:0`):
+> - **Explain with AI**: In-depth explanations for findings (shadowed rules, redundancy, overly permissive configurations) detailing issue, evidence, risks, remediation, side effects, and verification.
+> - **AI Rule Recommendations**: "Suggest Improvements" on the Firewall Rules page recommending safer rules with rationales and impact assessments.
+> - **AI Policy Comparison**: "Explain Comparison with AI" analyzing before-and-after decisions, newly allowed/denied traffic, and areas of concern.
+> - **Context-Aware AI Assistant**: Slide-out assistant drawer answering questions about your existing rules, findings, and comparisons.
+> - **Dual-Theme Support**: Instant toggle between traditional Light Mode (white background, dark text) and Dark Mode (black background, light text).
+> - **Safety & Determinism**: The evaluation and analysis engines remain 100% deterministic; all AI features are advisory and read-only. No AWS credentials are hardcoded.
 
 ---
 

@@ -1,5 +1,9 @@
 import React from 'react';
-import { X, Camera, Shield } from 'lucide-react';
+import {
+  Cancel01Icon as X,
+  Camera01Icon as Camera,
+  Shield01Icon as Shield,
+} from 'hugeicons-react';
 
 export default function SnapshotModal({ isOpen, onClose, rules = [], simulationName = '' }) {
   if (!isOpen) return null;

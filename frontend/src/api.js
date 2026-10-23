@@ -70,7 +70,7 @@ export const deleteSimulation = (id) => fetchApi(`/simulations/${id}`, { method:
 // Dashboard API
 export const getDashboardStats = () => fetchApi("/dashboard/stats");
 
-// Policy Analysis API (Stage 2)
+// Policy Analysis API
 export const runPolicyAnalysis = () => fetchApi("/analysis/run", { method: "POST" });
 export const getLatestPolicyAnalysis = () => fetchApi("/analysis/latest");
 export const getPolicyAnalyses = () => fetchApi("/analysis");
@@ -83,7 +83,7 @@ export const restoreFinding = (id) => fetchApi(`/analysis/findings/${id}/restore
   method: "PATCH",
 });
 
-// Policy Comparisons API (Stage 2)
+// Policy Comparisons API
 export const createPolicyComparison = (data) => fetchApi("/comparisons", {
   method: "POST",
   body: JSON.stringify(data),
@@ -101,4 +101,27 @@ export const getPolicyComparisonDetail = (id, params = {}) => {
 };
 export const getExportComparisonCsvUrl = (id) => `${API_BASE}/comparisons/${id}/export`;
 export const deleteComparison = (id) => fetchApi(`/comparisons/${id}`, { method: "DELETE" });
+
+// AI API
+export const getAIStatus = () => fetchApi("/ai/status");
+
+export const aiExplainFinding = (data) => fetchApi("/ai/explain-finding", {
+  method: "POST",
+  body: JSON.stringify(data),
+});
+
+export const aiSuggestImprovements = (data) => fetchApi("/ai/suggest-improvements", {
+  method: "POST",
+  body: JSON.stringify(data),
+});
+
+export const aiExplainComparison = (data) => fetchApi("/ai/explain-comparison", {
+  method: "POST",
+  body: JSON.stringify(data),
+});
+
+export const aiAssistant = (data) => fetchApi("/ai/assistant", {
+  method: "POST",
+  body: JSON.stringify(data),
+});
 

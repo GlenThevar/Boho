@@ -8,15 +8,15 @@ import {
 import DeleteConfirmModal from '../components/DeleteConfirmModal';
 import SnapshotModal from '../components/SnapshotModal';
 import {
-  History,
-  ArrowUpRight,
-  Download,
-  Trash2,
-  Camera,
-  RefreshCw,
-  Shield,
-  Layers
-} from 'lucide-react';
+  Clock01Icon as History,
+  ArrowUpRight01Icon as ArrowUpRight,
+  Download01Icon as Download,
+  Delete01Icon as Trash2,
+  Camera01Icon as Camera,
+  RefreshIcon as RefreshCw,
+  Shield01Icon as Shield,
+  Layers01Icon as Layers,
+} from 'hugeicons-react';
 
 export default function SimulationHistory({ onOpenSimulation }) {
   const [simulations, setSimulations] = useState([]);

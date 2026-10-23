@@ -5,30 +5,32 @@ import {
   createPolicyComparison,
   getPolicyComparisonDetail,
   getExportComparisonCsvUrl,
+  aiExplainComparison,
 } from '../api';
 import RuleModal from '../components/RuleModal';
+import AIExplanationPanel from '../components/AIExplanationPanel';
 import {
-  GitCompare,
-  ArrowRight,
-  Plus,
-  Trash2,
-  Edit2,
-  ArrowUp,
-  ArrowDown,
-  Download,
-  Play,
-  RefreshCw,
-  Search,
-  Filter,
-  CheckCircle2,
-  XCircle,
-  HelpCircle,
-  AlertTriangle,
-  RotateCcw,
-  Layers,
-  ChevronLeft,
-  ChevronRight
-} from 'lucide-react';
+  GitCompareIcon as GitCompare,
+  ArrowRight01Icon as ArrowRight,
+  Add01Icon as Plus,
+  Delete01Icon as Trash2,
+  Edit01Icon as Edit2,
+  ArrowUp01Icon as ArrowUp,
+  ArrowDown01Icon as ArrowDown,
+  Download01Icon as Download,
+  PlayIcon as Play,
+  RefreshIcon as RefreshCw,
+  Search01Icon as Search,
+  FilterIcon as Filter,
+  CheckmarkCircle01Icon as CheckCircle2,
+  Cancel01Icon as XCircle,
+  HelpCircleIcon as HelpCircle,
+  AlertCircleIcon as AlertTriangle,
+  ArrowTurnBackwardIcon as RotateCcw,
+  Layers01Icon as Layers,
+  ArrowLeft01Icon as ChevronLeft,
+  ArrowRight01Icon as ChevronRight,
+} from 'hugeicons-react';
 
 export default function PolicyComparison() {
   const [simulations, setSimulations] = useState([]);
@@ -443,6 +445,30 @@ export default function PolicyComparison() {
               <span>Export Comparison CSV</span>
             </a>
           </div>
+
+          {/* AI Explain Comparison */}
+          {comparisonSummary && (
+            <AIExplanationPanel
+              title="Explain Comparison with AI"
+              onFetch={() =>
+                aiExplainComparison({
+                  comparison_id: comparisonSummary.id || 0,
+                  before_label: comparisonSummary.name || 'Original Policy',
+                  after_label: 'Proposed Policy',
+                  total_records: comparisonSummary.total_records || 0,
+                  changed_records: comparisonSummary.changed_decisions || 0,
+                  newly_allowed: comparisonSummary.deny_to_allow || 0,
+                  newly_denied: comparisonSummary.allow_to_deny || 0,
+                  summary_stats: {
+                    original_allowed: comparisonSummary.original_allowed || 0,
+                    original_denied: comparisonSummary.original_denied || 0,
+                    proposed_allowed: comparisonSummary.proposed_allowed || 0,
+                    proposed_denied: comparisonSummary.proposed_denied || 0,
+                  },
+                })
+              }
+            />
+          )}
 
           {/* Decision Comparison KPI Cards */}
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3">

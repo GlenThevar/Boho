@@ -6,19 +6,19 @@ import {
 import RecordDetailModal from '../components/RecordDetailModal';
 import SnapshotModal from '../components/SnapshotModal';
 import {
-  Download,
-  Camera,
-  Search,
-  Filter,
-  CheckCircle2,
-  XCircle,
-  Eye,
-  RefreshCw,
-  ChevronLeft,
-  ChevronRight,
-  Shield,
-  ArrowRight
-} from 'lucide-react';
+  Download01Icon as Download,
+  Camera01Icon as Camera,
+  Search01Icon as Search,
+  FilterIcon as Filter,
+  CheckmarkCircle01Icon as CheckCircle2,
+  Cancel01Icon as XCircle,
+  EyeIcon as Eye,
+  RefreshIcon as RefreshCw,
+  ArrowLeft01Icon as ChevronLeft,
+  ArrowRight01Icon as ChevronRight,
+  Shield01Icon as Shield,
+  ArrowRight01Icon as ArrowRight,
+} from 'hugeicons-react';
 
 export default function SimulationResults({ simulationId, onBackToHistory }) {
   const [data, setData] = useState(null);

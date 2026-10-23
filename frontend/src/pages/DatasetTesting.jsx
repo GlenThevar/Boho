@@ -5,17 +5,17 @@ import {
   runSimulation,
 } from '../api';
 import {
-  UploadCloud,
-  Download,
-  FileText,
-  AlertTriangle,
-  CheckCircle2,
-  Play,
-  RefreshCw,
-  XCircle,
-  HelpCircle,
-  Info
-} from 'lucide-react';
+  Upload01Icon as UploadCloud,
+  Download01Icon as Download,
+  File01Icon as FileText,
+  AlertCircleIcon as AlertTriangle,
+  CheckmarkCircle01Icon as CheckCircle2,
+  PlayIcon as Play,
+  RefreshIcon as RefreshCw,
+  Cancel01Icon as XCircle,
+  HelpCircleIcon as HelpCircle,
+  InformationCircleIcon as Info,
+} from 'hugeicons-react';
 
 export default function DatasetTesting({ onSimulationComplete }) {
   const [file, setFile] = useState(null);
@@ -96,9 +96,9 @@ export default function DatasetTesting({ onSimulationComplete }) {
         <a
           href={downloadSampleCsvUrl}
           download="boho_traffic_sample.csv"
-          className="px-3.5 py-2 text-xs font-semibold text-cyan-300 bg-cyan-950/60 hover:bg-cyan-900 border border-cyan-800/80 rounded-lg flex items-center space-x-2 shrink-0 shadow-sm"
+          className="btn-monochrome px-3.5 py-2 text-xs font-semibold rounded-lg flex items-center space-x-2 shrink-0 transition-opacity"
         >
-          <Download className="w-4 h-4 text-cyan-400" />
+          <Download className="w-4 h-4" />
           <span>Download Sample CSV</span>
         </a>
       </div>

@@ -1,5 +1,12 @@
 import React from 'react';
-import { X, CheckCircle, XCircle, AlertTriangle, Shield, ArrowRight } from 'lucide-react';
+import {
+  Cancel01Icon as X,
+  CheckmarkCircle01Icon as CheckCircle,
+  Cancel01Icon as XCircle,
+  AlertCircleIcon as AlertTriangle,
+  Shield01Icon as Shield,
+  ArrowRight01Icon as ArrowRight,
+} from 'hugeicons-react';
 
 export default function RecordDetailModal({ record, onClose }) {
   if (!record) return null;

@@ -1,35 +1,71 @@
 import React from 'react';
-import { Shield, Radio, Terminal } from 'lucide-react';
+import {
+  Shield01Icon,
+  ComputerTerminal01Icon,
+  Sun01Icon,
+  Moon01Icon,
+  AiChat01Icon,
+} from 'hugeicons-react';
+import { useTheme } from '../context/ThemeContext';
 
-export default function Navbar() {
+export default function Navbar({ onOpenAssistant }) {
+  const { theme, toggleTheme } = useTheme();
+  const isDark = theme === 'dark';
+
   return (
-    <header className="h-16 border-b border-slate-800 bg-slate-900/80 backdrop-blur px-6 flex items-center justify-between sticky top-0 z-20">
+    <header className="h-16 px-6 flex items-center justify-between sticky top-0 z-20 bg-card">
+      {/* Brand */}
       <div className="flex items-center space-x-3">
-        <div className="w-10 h-10 rounded-lg bg-cyan-950 border border-cyan-500/40 flex items-center justify-center text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.25)]">
-          <Shield className="w-6 h-6" />
+        <div className="w-9 h-9 rounded-lg flex items-center justify-center">
+          <Shield01Icon className="w-5 h-5" />
         </div>
-        <div>
-          <div className="flex items-center space-x-2">
-            <span className="font-bold text-lg tracking-wider text-slate-100 font-mono">BOHO</span>
-            <span className="text-[10px] uppercase font-semibold tracking-wider px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800/60 font-mono">
-              Stage 2: Policy Analysis
-            </span>
-          </div>
-          <p className="text-xs text-slate-400">Firewall Policy Simulation, Security Audit & Testing Platform</p>
-        </div>
+        <span className="font-bold text-lg tracking-wider font-mono">BOHO</span>
       </div>
 
-      <div className="flex items-center space-x-4">
-        <div className="hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-full bg-slate-800/80 border border-slate-700 text-xs text-slate-300">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span className="font-mono text-emerald-400 font-semibold">Offline Simulation Engine</span>
-          <span className="text-slate-500">|</span>
-          <span className="text-slate-400">Host OS Safe</span>
+      {/* Controls */}
+      <div className="flex items-center space-x-3">
+        {/* Offline indicator */}
+        <div className="hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-full text-xs">
+          <span className="w-2 h-2 rounded-full border border-current" />
+          <span className="font-mono font-semibold">Offline Simulation Engine</span>
+          <span>|</span>
+          <span>Host OS Safe</span>
         </div>
-        <div className="flex items-center space-x-1.5 text-xs text-slate-400 font-mono bg-slate-950/60 px-3 py-1.5 rounded-md border border-slate-800">
-          <Terminal className="w-3.5 h-3.5 text-cyan-400" />
-          <span>v1.0-stage1</span>
+
+        {/* Version */}
+        <div className="hidden sm:flex items-center space-x-1.5 text-xs font-mono px-3 py-1.5 rounded-md">
+          <ComputerTerminal01Icon className="w-3.5 h-3.5" />
+          <span>v3.0</span>
         </div>
+
+        {/* AI Assistant button */}
+        <button
+          onClick={onOpenAssistant}
+          title="Open AI Assistant"
+          className="flex items-center space-x-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition-colors hover:bg-hover"
+        >
+          <AiChat01Icon className="w-4 h-4" />
+          <span className="hidden sm:inline">AI Assistant</span>
+        </button>
+
+        {/* Theme toggle button */}
+        <button
+          onClick={toggleTheme}
+          title={isDark ? 'Switch to Pure White Mode' : 'Switch to Pure Dark Mode'}
+          className="flex items-center space-x-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition-colors hover:bg-hover"
+        >
+          {isDark ? (
+            <>
+              <Sun01Icon className="w-4 h-4" />
+              <span className="font-mono">Light</span>
+            </>
+          ) : (
+            <>
+              <Moon01Icon className="w-4 h-4" />
+              <span className="font-mono">Dark</span>
+            </>
+          )}
+        </button>
       </div>
     </header>
   );

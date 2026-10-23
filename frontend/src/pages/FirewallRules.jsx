@@ -7,24 +7,26 @@ import {
   reorderRules,
   deleteRule,
   seedDefaultRules,
+  aiSuggestImprovements,
 } from '../api';
 import RuleModal from '../components/RuleModal';
 import DeleteConfirmModal from '../components/DeleteConfirmModal';
+import AIExplanationPanel from '../components/AIExplanationPanel';
 import {
-  Plus,
-  Shield,
-  ArrowUp,
-  ArrowDown,
-  Edit2,
-  Trash2,
-  CheckCircle2,
-  XCircle,
-  HelpCircle,
-  Sparkles,
-  RefreshCw,
-  AlertCircle,
-  Info
-} from 'lucide-react';
+  Add01Icon as Plus,
+  Shield01Icon as Shield,
+  ArrowUp01Icon as ArrowUp,
+  ArrowDown01Icon as ArrowDown,
+  Edit01Icon as Edit2,
+  Delete01Icon as Trash2,
+  CheckmarkCircle01Icon as CheckCircle2,
+  Cancel01Icon as XCircle,
+  HelpCircleIcon as HelpCircle,
+  SparklesIcon as Sparkles,
+  RefreshIcon as RefreshCw,
+  AlertCircleIcon as AlertCircle,
+  InformationCircleIcon as Info,
+} from 'hugeicons-react';
 
 export default function FirewallRules() {
   const [rules, setRules] = useState([]);
@@ -162,6 +164,35 @@ export default function FirewallRules() {
           </button>
         </div>
       </div>
+
+      {/* AI Suggest Improvements */}
+      {rules.length > 0 && (
+        <AIExplanationPanel
+          title="Suggest Rule Improvements (AI)"
+          onFetch={() =>
+            aiSuggestImprovements({
+              rules: rules.map((r) => ({
+                priority: r.priority,
+                name: r.name,
+                source_ip: r.source_ip,
+                destination_ip: r.destination_ip,
+                destination_port: r.destination_port,
+                protocol: r.protocol,
+                action: r.action,
+                enabled: r.enabled,
+              })),
+            }).then((res) => ({
+              success: res.success,
+              ai_enabled: res.ai_enabled,
+              explanation: res.raw_text || (res.suggestions?.map(
+                (s, i) => `**${i + 1}. ${s.title}**\n${s.description}\n\nRationale: ${s.rationale}\nImpact: ${s.impact}`
+              ).join('\n\n')),
+              error: res.error,
+              disclaimer: res.disclaimer,
+            }))
+          }
+        />
+      )}
 
       {/* Default Policy Banner */}
       <div className="p-4 rounded-xl bg-[#111726] border border-slate-800 flex items-start space-x-3 text-xs">
